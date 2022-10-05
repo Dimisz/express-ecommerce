@@ -15,6 +15,7 @@ app.set('views', 'views'); //used by default, but need to change if using differ
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
+const pageNotFoundRoute = require('./controllers/noPageFoundController');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -22,12 +23,6 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 
-app.use((req, res, next) => {
-    //res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-    res.status(404).render('404', {
-        pageTitle: '4004',
-        path: '/404'
-    });
-});
+app.use(pageNotFoundRoute.showPageNotFound);
 
 app.listen(3000);
